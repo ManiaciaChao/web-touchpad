@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "@types/koa": "^2.11.0",
+    "@types/node": "^12.12.17",
+    "@types/socket.io": "^2.1.4",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "koa": "^2.11.0",
+    "socket.io": "^2.3.0",
+    "xdotool": "^1.0.25"
+  }
+}
