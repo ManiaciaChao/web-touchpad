@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { FunctionComponent } from "react";
 import { Screen } from "./model/screen";
 import { toggleFullScreen } from "./util/index";
-import Gesture from "./model/gesture";
+import Gesture from "./model/Gesture";
 import { screenSize } from "./model/socketIO";
 
 const TouchContainer: FunctionComponent = props => {
@@ -15,14 +15,23 @@ const TouchContainer: FunctionComponent = props => {
   const [touchBehavior, setTouchBehavior] = useState("Waiting");
 
   const [gesture, setGesture] = useState({} as Gesture);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const screen = new Screen({
-      width: ref.current.clientWidth,
-      height: ref.current.clientHeight
+    screenSize(
+      new Screen({
+        width: ref.current.clientWidth,
+        height: ref.current.clientHeight
+      })
+    );
+    window.addEventListener("resize", () => {
+      screenSize(
+        new Screen({
+          width: ref.current.clientWidth,
+          height: ref.current.clientHeight
+        })
+      );
     });
-    screenSize(screen);
   }, []);
 
   const setTouchEvent = (event: TouchEvent) => {
@@ -75,9 +84,6 @@ const TouchContainer: FunctionComponent = props => {
 
 const TouchEventLogger: FunctionComponent<{ event: TouchEvent }> = props => {
   const touches = props.event?.changedTouches;
-  // if (touches && touches[0]) {
-  //   console.log(touches[0] || "");
-  // }
   return (
     <div>
       {touches &&
